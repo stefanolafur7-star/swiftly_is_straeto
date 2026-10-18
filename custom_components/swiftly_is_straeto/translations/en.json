@@ -1,0 +1,54 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Setja upp tengingu við Strætó BS.",
+        "description": "Sláðu inn Swiftly IS Straeto API lykilinn þinn. Upplýsingar um hvernig á að fá API lykil má finna [hér](https://www.straeto.is/en/about-straeto/open-data/real-time-data).",
+        "data": {
+          "api_key": "API Lykill"
+        },
+        "data_description": {
+          "api_key": "The API key to use for Swiftly IS Straeto."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Náði ekki tengingu. Vinsamlegast athugaðu nettenginguna þína og reyndu aftur.",
+      "invalid_auth": "API lykillinn sem þú slóst inn er rangur.",
+      "unknown": "Óþekkt villa kom upp. Vinsamlegast reyndu aftur."
+    },
+    "abort": {
+      "already_configured": "Strætó er þegar uppsett.",
+      "cannot_connect": "Náði ekki tengingu við þjóninn",
+      "unknown": "Óþekkt villa kom upp."
+    }
+  },
+  "config_subentries": {
+    "device": {
+      "create_entry": {
+        "default": "Leið var bætt við."
+      },
+      "entry_type": "Strætó Leið",
+      "initiate_flow": {
+        "reconfigure": "Endurstilltu Strætó Leið",
+        "user": "Bættu við Strætó Leið"
+      },
+      "step": {
+        "user": {
+          "title": "Veldu Leið",
+          "description": "Veldu leið sem þú vilt fylgjast með.",
+          "data": {
+            "route": "Leið"
+          }
+        },
+        "stops": {
+          "title": "Veldu Stopp",
+          "description": "Veldu stopp sem þú vilt fylgjast með fyrir valda leið.",
+          "data": {
+            "stops": "Stopp"
+          }
+        }
+      }
+    }
+  }
+}
