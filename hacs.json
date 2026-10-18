@@ -5,8 +5,7 @@
   "domains": ["swiftly_is_straeto"],
   "homeassistant": "2025.6.0",
   "iot_class": "cloud_polling",
-  "documentation": "https://github.com/finnure/swiftly_is_straeto#readme",
-  "zip_release": true,
+  "documentation": "https://github.com/finnure/swiftly_is_straeto#readme"
   "country": ["IS"],
   "render_readme": true
 }
