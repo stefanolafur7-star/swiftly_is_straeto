@@ -33,3 +33,11 @@ Ef API lykill er í lagi er viðbótin tilbúin og hægt að bæta við leiðum 
 - Upplýsingar um alla vagna á öllum völdum leiðum eru innifalin í einu kalli
 - Hver stoppistöð sem valin er þarf eitt kall. Vegna þess er ekki öruggt að velja fleiri en 5 stopp.
 - Ef sama stoppistöð er valin fyrir fleiri en eina leið kostar það bara eitt kall.
+
+## Lyklar með aðeins GTFS-rt aðgang
+
+Sumir API lyklar frá Swiftly hafa bara aðgang að GTFS-rt straumunum (trip updates og vehicle positions) en ekki JSON rauntímaviðmótunum. Viðbótin finnur það sjálf og sækir þá rauntímann úr GTFS-rt straumunum í staðinn, án aukapakka.
+
+- Öll gögn kosta þá tvö köll á 30 sekúndna fresti, sama hversu mörg stopp eru valin. Upplýsingar um leiðir og stopp eru sóttar á 6 tíma fresti.
+- GTFS-rt hefur engin block númer, svo vagnar eru auðkenndir með númeri vagnsins.
+- Frávik er jákvætt þegar vagninn er á eftir áætlun.

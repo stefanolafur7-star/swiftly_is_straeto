@@ -2,6 +2,7 @@
 
 from aiohttp import ClientSession
 
+from .gtfs_rt import GTFSRealtimeDecodeError
 from .models import (
     JSONInfoData,
     JSONInfoResponse,
@@ -20,6 +21,7 @@ from .models import (
 )
 
 __all__ = [
+    "GTFSRealtimeDecodeError",
     "InvalidRequestError",
     "JSONInfoData",
     "JSONInfoResponse",
@@ -160,3 +162,21 @@ class SwiftlyAPIClient:
             data = await response.json()
             self._validate_response(data)
             return JSONVehicleDetailResponse(**data).get("data")
+
+    async def _get_gtfs_rt(self, feed: str) -> bytes:
+        """Fetch a raw GTFS-rt protobuf feed from Swiftly API."""
+        url = f"{self.BASE_URL}/real-time/{self.AGENCY_KEY}/{feed}"
+        headers = {"Authorization": self.api_key, "Accept": "application/x-protobuf"}
+        async with self.session.get(url, headers=headers) as response:
+            self._raise_for_status(response.status)
+            if response.status != 200:
+                raise UnexpectedAPIError(f"Unexpected status {response.status}.")
+            return await response.read()
+
+    async def get_gtfs_rt_vehicle_positions(self) -> bytes:
+        """Fetch the GTFS-rt vehicle positions feed."""
+        return await self._get_gtfs_rt("gtfs-rt-vehicle-positions")
+
+    async def get_gtfs_rt_trip_updates(self) -> bytes:
+        """Fetch the GTFS-rt trip updates feed."""
+        return await self._get_gtfs_rt("gtfs-rt-trip-updates")
