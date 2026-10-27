@@ -24,9 +24,12 @@ class VehicleExtraStateAttributes(TypedDict):
     interval_seconds: int
 
 
-class PredictionExtraStateAttributes(TypedDict):
+class PredictionExtraStateAttributes(TypedDict, total=False):
     """Extra state attributes for a Swiftly IS Straeto prediction."""
 
+    route: str
+    stop_name: str
+    headsign: str
     vehicle_id: str
     block_id: int
     trip_id: str
@@ -165,16 +168,21 @@ class Prediction:
 
     @property
     def extra_state_attributes(self) -> PredictionExtraStateAttributes | None:
-        """Return the extra state attributes for this prediction."""
-        return (
-            {
-                "vehicle_id": self.prediction["vehicleId"],
-                "block_id": self.prediction["blockId"],
-                "trip_id": self.prediction["tripId"],
-            }
-            if self.prediction
-            else {}
-        )
+        """Return the extra state attributes for this prediction.
+
+        Route, stop and headsign are always there, so dashboards can show the
+        stop even while no bus is on its way.
+        """
+        attributes: PredictionExtraStateAttributes = {
+            "route": self._prediction_data.get("routeShortName") or self.route_id,
+            "stop_name": self.stop_name,
+            "headsign": self.headsign,
+        }
+        if self.prediction:
+            attributes["vehicle_id"] = self.prediction["vehicleId"]
+            attributes["block_id"] = self.prediction["blockId"]
+            attributes["trip_id"] = self.prediction["tripId"]
+        return attributes
 
     @property
     def subentry_id(self) -> str:
